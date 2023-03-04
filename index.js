@@ -33,6 +33,9 @@ const addIncome = (event) => {
   };
 
   incomes.push(income);
+
+  incomeName.value = "";
+  incomeAmount.value = "";
 };
 
 incomeForm.addEventListener("submit", addIncome);
