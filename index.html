@@ -1,13 +1,93 @@
 <!DOCTYPE html>
-<html lang="pl-PL">
+<html lang="en-EN">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-    <title>Budget</title>
+    <title>Home Budget App</title>
   </head>
   <body>
+    <header>
+      <nav class="nav">
+        <a class="nav-logo" href="\"
+          ><img src="images/home-budget-logo.png" alt="Home budget logo"
+        /></a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <section id="balance">
+          <h1 id="heading">
+            <span id="total-balance">Amount will go here</span>
+          </h1>
+        </section>
+
+        <section id="budget-section">
+          <div id="budget-income" class="budget-part">
+            <h2>Income</h2>
+            <div class="form-container">
+              <form id="income-form">
+                <input
+                  id="income-name"
+                  class="form-input"
+                  type="text"
+                  placeholder="Income name"
+                />
+                <input
+                  id="income-amount"
+                  class="form-input"
+                  type="text"
+                  placeholder="Kwota"
+                />
+                <button id="income-form-submit" class="btn" type="submit">
+                  Add
+                </button>
+              </form>
+            </div>
+            <div id="income-container"></div>
+            <div id="income-total-container">
+              <p>Income total:<span id="income-total">0</span></p>
+            </div>
+          </div>
+
+          <div id="budget-expenses" class="budget-part">
+            <h2>Expenses</h2>
+            <div class="form-container">
+              <form id="expenses-form">
+                <input
+                  id="expenses-name"
+                  class="form-input"
+                  type="text"
+                  placeholder="Nazwa wydatku"
+                />
+                <input
+                  id="expenses-amount"
+                  class="form-input"
+                  type="text"
+                  placeholder="Amount"
+                />
+                <button id="expenses-form-submit" class="btn" type="submit">
+                  Add
+                </button>
+              </form>
+            </div>
+            <div id="expenses-container"></div>
+            <div id="expenses-total-container">
+              <p>Expenses total:<span id="expenses-total">0</span></p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
     <script src="index.js"></script>
   </body>
 </html>
