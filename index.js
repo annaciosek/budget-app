@@ -24,12 +24,16 @@ renderIncome = (income) => {
   // div for income items
   const newIncome = document.createElement("div");
   newIncome.id = `income-${income.id}`;
-  newElement.classList.add("income-list");
+  newIncome.classList.add("income-list");
 
   // p for title and amount
   const incomeTitleAndAmount = document.createElement("p");
   incomeTitleAndAmount.classList.add("income-item");
-  incomeTitleAndAmount.innerHTML = `<span>${income.title} - ${income.value} PLN</span>`;
+  incomeTitleAndAmount.innerHTML = `<span>${income.title}: ${income.value} PLN</span>`;
+
+  // 1) add title and amount to div and 2) div to the list
+  newIncome.appendChild(incomeTitleAndAmount);
+  incomeList.appendChild(newIncome);
 };
 
 const addIncome = (event) => {
