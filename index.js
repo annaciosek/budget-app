@@ -12,9 +12,27 @@ Income bedzie obiektem:
 }
 */
 
-const incomeContainer = document.querySelector("#income-container"); // wyswietla przychod po wprowadzeniu w formularz
-const incomeName = document.querySelector("#income-name"); // input a nazwą
-const incomeAmount = document.querySelector("#income-amount"); // input z kwota
-const incomeForm = document.querySelector("#income-form"); // caly formularz
-const incomeTotal = document.querySelector("#income-total"); // suma
-const totalBalance = document.querySelector("#total-balance"); // budzet w headingu
+const incomeName = document.querySelector("#income-name"); // income input
+const incomeAmount = document.querySelector("#income-amount"); // amount input
+const incomeForm = document.querySelector("#income-form"); // form
+const incomeList = document.querySelector("#income-list");
+const incomeTotal = document.querySelector("#income-total"); // income sum
+const totalBalance = document.querySelector("#total-balance"); // balance info
+
+const addIncome = (event) => {
+  event.preventDefault();
+  const incomeNameValue = incomeName.value;
+  const incomeAmountValue = incomeAmount.value;
+  const incomeId = Date.now();
+
+  //Create income object
+  const income = {
+    id: incomeId,
+    title: incomeNameValue,
+    value: incomeAmountValue,
+  };
+
+  incomes.push(income);
+};
+
+incomeForm.addEventListener("submit", addIncome);
