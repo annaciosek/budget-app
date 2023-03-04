@@ -19,6 +19,19 @@ const incomeList = document.querySelector("#income-list");
 const incomeTotal = document.querySelector("#income-total"); // income sum
 const totalBalance = document.querySelector("#total-balance"); // balance info
 
+// renderIncome Function
+renderIncome = (income) => {
+  // div for income items
+  const newIncome = document.createElement("div");
+  newIncome.id = `income-${income.id}`;
+  newElement.classList.add("income-list");
+
+  // p for title and amount
+  const incomeTitleAndAmount = document.createElement("p");
+  incomeTitleAndAmount.classList.add("income-item");
+  incomeTitleAndAmount.innerHTML = `<span>${income.title} - ${income.value} PLN</span>`;
+};
+
 const addIncome = (event) => {
   event.preventDefault();
   const incomeNameValue = incomeName.value;
@@ -33,6 +46,7 @@ const addIncome = (event) => {
   };
 
   incomes.push(income);
+  renderIncome(income);
 
   incomeName.value = "";
   incomeAmount.value = "";
