@@ -15,7 +15,7 @@ Income bedzie obiektem:
 const incomeName = document.querySelector("#income-name"); // income input
 const incomeAmount = document.querySelector("#income-amount"); // amount input
 const incomeForm = document.querySelector("#income-form"); // form
-const incomeList = document.querySelector("#income-list");
+const incomeList = document.querySelector("#income-list-container");
 const incomeTotal = document.querySelector("#income-total"); // income sum
 const totalBalance = document.querySelector("#total-balance"); // balance info
 
@@ -36,13 +36,19 @@ renderIncome = (income) => {
   incomeList.appendChild(newIncome);
 };
 
-const addIncome = (event) => {
-  event.preventDefault();
+const calcSum = (incomes, incomeTotal) => {
+  sum = incomes
+    .map((income) => Number(income.value))
+    .reduce((a, b) => a + b, 0);
+  incomeTotal.innerText = sum;
+};
+
+// Create Income object
+const addIncome = () => {
   const incomeNameValue = incomeName.value;
   const incomeAmountValue = incomeAmount.value;
   const incomeId = Date.now();
 
-  //Create income object
   const income = {
     id: incomeId,
     title: incomeNameValue,
@@ -51,9 +57,15 @@ const addIncome = (event) => {
 
   incomes.push(income);
   renderIncome(income);
+  // Calculate sum of incomes
+  calcSum(incomes, incomeTotal);
 
+  // Clear input fields
   incomeName.value = "";
   incomeAmount.value = "";
 };
 
-incomeForm.addEventListener("submit", addIncome);
+incomeForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  addIncome();
+});
