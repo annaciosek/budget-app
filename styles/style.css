@@ -96,11 +96,3 @@ h2 {
 }
 
 /* klasa z js*/
-.item {
-  display: flex;
-  justify-content: space-between;
-}
-
-.item-title {
-  color: var(--accent);
-}
