@@ -1,3 +1,4 @@
+// Arrays
 const incomes = [];
 const expenses = [];
 
@@ -21,7 +22,7 @@ const incomeList = document.querySelector("#income-list-container");
 const incomeTotal = document.querySelector("#income-total"); // income sum
 const totalBalance = document.querySelector("#total-balance"); // balance info
 
-// ---------------------------------------------------------------------- 3 ----
+/////////////////////////////////////////////////////////////////////////// 3
 // 3 - renderIncome Function
 
 renderIncome = (income) => {
@@ -39,23 +40,30 @@ renderIncome = (income) => {
   newIncome.appendChild(incomeTitleAndAmount);
   incomeList.appendChild(newIncome);
 
-  //add edit & delete btns
-  const incomeEdit = document.createElement("div");
-  incomeEdit.classList.add("income-edit");
+  /////////////////////////////////////////////////////////////////////////// 5
+  // 5 - Edit & Delete btns (for both income & expenses)
 
-  const editIncome = document.createElement("button");
-  const deleteIncome = document.createElement("button");
-  editIncome.classList.add("edit-btn");
-  deleteIncome.classList.add("edit-btn");
-  editIncome.innerText = "Edit";
-  deleteIncome.innerText = "Delete";
+  const budgetItemEdit = document.createElement("div");
+  budgetItemEdit.classList.add("income-edit");
 
-  newIncome.appendChild(incomeEdit);
-  incomeEdit.appendChild(editIncome);
-  incomeEdit.appendChild(deleteIncome);
+  const editButton = document.createElement("button");
+  const deleteButton = document.createElement("button");
+  editButton.classList.add("edit-btn");
+  deleteButton.classList.add("edit-btn");
+  editButton.innerText = "Edit";
+  deleteButton.innerText = "Delete";
+
+  newIncome.appendChild(budgetItemEdit);
+  budgetItemEdit.appendChild(editButton);
+  budgetItemEdit.appendChild(deleteButton);
+
+  //action on edit & delete
+  deleteButton.addEventListener("click", (event) =>
+    removeIncome(event, incomeId)
+  );
 };
 
-// ---------------------------------------------------------------------- 4 ----
+/////////////////////////////////////////////////////////////////////////// 4
 // 4 - Sum of incomes
 
 const calcSum = (incomes, incomeTotal) => {
@@ -65,7 +73,7 @@ const calcSum = (incomes, incomeTotal) => {
   incomeTotal.innerText = sum;
 };
 
-// ---------------------------------------------------------------------- 2 ----
+/////////////////////////////////////////////////////////////////////////// 2
 // 2 - Create Income object
 
 const addIncome = () => {
@@ -89,7 +97,7 @@ const addIncome = () => {
   incomeAmount.value = "";
 };
 
-// ---------------------------------------------------------------------- 1 ----
+/////////////////////////////////////////////////////////////////////////// 1
 // 1 - Click event
 
 incomeForm.addEventListener("submit", (event) => {
