@@ -12,6 +12,8 @@ Income bedzie obiektem:
 }
 */
 
+// Variables
+
 const incomeName = document.querySelector("#income-name"); // income input
 const incomeAmount = document.querySelector("#income-amount"); // amount input
 const incomeForm = document.querySelector("#income-form"); // form
@@ -19,7 +21,9 @@ const incomeList = document.querySelector("#income-list-container");
 const incomeTotal = document.querySelector("#income-total"); // income sum
 const totalBalance = document.querySelector("#total-balance"); // balance info
 
-// renderIncome Function
+// ---------------------------------------------------------------------- 3 ----
+// 3 - renderIncome Function
+
 renderIncome = (income) => {
   // div for income items
   const newIncome = document.createElement("div");
@@ -31,10 +35,28 @@ renderIncome = (income) => {
   incomeTitleAndAmount.classList.add("income-item");
   incomeTitleAndAmount.innerHTML = `<span>${income.title}: ${income.value} PLN</span>`;
 
-  // 1) add title and amount to div and 2) div to the list
+  // (a) add title and amount to div and (b) div to the list
   newIncome.appendChild(incomeTitleAndAmount);
   incomeList.appendChild(newIncome);
+
+  //add edit & delete btns
+  const incomeEdit = document.createElement("div");
+  incomeEdit.classList.add("income-edit");
+
+  const editIncome = document.createElement("button");
+  const deleteIncome = document.createElement("button");
+  editIncome.classList.add("edit-btn");
+  deleteIncome.classList.add("edit-btn");
+  editIncome.innerText = "Edit";
+  deleteIncome.innerText = "Delete";
+
+  newIncome.appendChild(incomeEdit);
+  incomeEdit.appendChild(editIncome);
+  incomeEdit.appendChild(deleteIncome);
 };
+
+// ---------------------------------------------------------------------- 4 ----
+// 4 - Sum of incomes
 
 const calcSum = (incomes, incomeTotal) => {
   sum = incomes
@@ -43,7 +65,9 @@ const calcSum = (incomes, incomeTotal) => {
   incomeTotal.innerText = sum;
 };
 
-// Create Income object
+// ---------------------------------------------------------------------- 2 ----
+// 2 - Create Income object
+
 const addIncome = () => {
   const incomeNameValue = incomeName.value;
   const incomeAmountValue = incomeAmount.value;
@@ -64,6 +88,9 @@ const addIncome = () => {
   incomeName.value = "";
   incomeAmount.value = "";
 };
+
+// ---------------------------------------------------------------------- 1 ----
+// 1 - Click event
 
 incomeForm.addEventListener("submit", (event) => {
   event.preventDefault();
