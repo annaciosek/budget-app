@@ -29,6 +29,10 @@ const expensesTotal = document.querySelector("#expenses-total"); // expenses sum
 
 const totalBalance = document.querySelector("#total-balance"); // balance info
 
+let total = 0;
+let incomeSum = 0;
+let expensesSum = 0;
+
 // /////////////////////////////////////////////////////////////////////////// 6
 // 6 - Remove btn function
 
@@ -126,17 +130,28 @@ renderExpenses = (expenses) => {
 // 4 - SUM of incomes / expenses
 
 const calcSum = (incomes, incomeTotal) => {
-  sum = incomes
+  incomeSum = incomes
     .map((income) => Number(income.value))
     .reduce((a, b) => a + b, 0);
-  incomeTotal.innerText = sum;
+  incomeTotal.innerText = incomeSum;
 };
 
 const calcSumExpenses = (allexpenses, expensesTotal) => {
-  sum = allexpenses
+  expensesSum = allexpenses
     .map((expenses) => Number(expenses.value))
     .reduce((a, b) => a + b, 0);
-  expensesTotal.innerText = sum;
+  expensesTotal.innerText = expensesSum;
+};
+
+const balance = (incomeTotal, expensesTotal) => {
+  total = incomeSum - expensesSum;
+  if (total > 0) {
+    totalBalance.innerText = `You can still spend ${total} PLN`;
+  } else if (total < 0) {
+    totalBalance.innerText = `Your balance is negative. You're in the negative by ${total} PLN`;
+  } else {
+    totalBalance.innerText = `Your balance is 0`;
+  }
 };
 /////////////////////////////////////////////////////////////////////////// 2
 // 2 - Create Income & Expenses object
@@ -156,6 +171,7 @@ const addIncome = () => {
   renderIncome(income);
   // Calculate sum of incomes
   calcSum(incomes, incomeTotal);
+  balance(incomeTotal, expensesTotal);
 
   // Clear input fields
   incomeName.value = "";
@@ -176,8 +192,8 @@ const addExpenses = () => {
   allexpenses.push(expenses);
   renderExpenses(expenses);
   calcSumExpenses(allexpenses, expensesTotal);
+  balance(incomeTotal, expensesTotal);
 
-  // Clear input fields
   expensesName.value = "";
   expensesAmount.value = "";
 };
