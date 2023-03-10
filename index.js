@@ -1,6 +1,6 @@
 // Arrays
 let incomes = [];
-let expenses = [];
+let allexpenses = [];
 
 /*
 Income bedzie obiektem:
@@ -41,8 +41,7 @@ const removeIncome = (event, itemId) => {
 };
 
 /////////////////////////////////////////////////////////////////////////// 3
-// 3 - renderIncome Function
-
+// 3 - render Income & render Expenses
 renderIncome = (income) => {
   // div for income items
   const newIncome = document.createElement("div");
@@ -79,6 +78,19 @@ renderIncome = (income) => {
   deleteButton.addEventListener("click", (event) =>
     removeIncome(event, income.id)
   );
+};
+
+renderExpenses = (expenses) => {
+  const newExpenses = document.createElement("div");
+  newExpenses.id = `expenses-${expenses.id}`;
+  newExpenses.classList.add("expenses-list");
+
+  const expensesTitleAndAmount = document.createElement("p");
+  expensesTitleAndAmount.classList.add("expenses-item");
+  expensesTitleAndAmount.innerHTML = `<span>${expenses.title}: ${expenses.value} PLN</span>`;
+
+  newExpenses.appendChild(expensesTitleAndAmount);
+  expensesList.appendChild(newExpenses);
 };
 
 /////////////////////////////////////////////////////////////////////////// 4
@@ -126,7 +138,7 @@ const addExpenses = () => {
     value: expensesAmountValue,
   };
 
-  expenses.push(expenses);
+  allexpenses.push(expenses);
   renderExpenses(expenses);
   // Calculate sum of expensess
   calcSum(expenses, expensesTotal);
