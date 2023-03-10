@@ -36,7 +36,7 @@ const removeIncome = (event, itemId) => {
   incomes = incomes.filter((item) => item.id !== itemId);
 
   const element = event.currentTarget;
-  const elementParent = element.closest(".income-list");
+  const elementParent = element.closest(".budget-group-list");
   elementParent.remove();
 };
 
@@ -46,7 +46,7 @@ renderIncome = (income) => {
   // div for income items
   const newIncome = document.createElement("div");
   newIncome.id = `income-${income.id}`;
-  newIncome.classList.add("income-list");
+  newIncome.classList.add("budget-group-list");
 
   // p for title and amount
   const incomeTitleAndAmount = document.createElement("p");
@@ -83,7 +83,7 @@ renderIncome = (income) => {
 renderExpenses = (expenses) => {
   const newExpenses = document.createElement("div");
   newExpenses.id = `expenses-${expenses.id}`;
-  newExpenses.classList.add("expenses-list");
+  newExpenses.classList.add("budget-group-list");
 
   const expensesTitleAndAmount = document.createElement("p");
   expensesTitleAndAmount.classList.add("expenses-item");

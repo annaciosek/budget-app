@@ -113,7 +113,7 @@ h2 {
 }
 
 /* Class for added income */
-.income-list {
+.budget-group-list {
   background-color: rgba(255, 255, 255, 0.65);
   border-radius: 10px;
   padding: 1em;
@@ -122,7 +122,7 @@ h2 {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.income-list:last-child {
+.budget-group-list:last-child {
   margin-bottom: 2em;
 }
 
