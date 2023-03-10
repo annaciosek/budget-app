@@ -40,6 +40,13 @@ const removeIncome = (event, itemId) => {
   elementParent.remove();
 };
 
+const removeExpenses = (event, itemId) => {
+  allexpenses = allexpenses.filter((item) => item.id !== itemId);
+
+  const element = event.currentTarget;
+  const elementParent = element.closest(".budget-group-list");
+  elementParent.remove();
+};
 /////////////////////////////////////////////////////////////////////////// 3
 // 3 - render Income & render Expenses
 renderIncome = (income) => {
@@ -58,7 +65,7 @@ renderIncome = (income) => {
   incomeList.appendChild(newIncome);
 
   /////////////////////////////////////////////////////////////////////////// 5
-  // 5 - Edit & Delete btns (for both income & expenses)
+  // 5 - Edit & Delete btns
 
   const budgetGroupEdit = document.createElement("div");
   budgetGroupEdit.classList.add("budget-group-edit");
@@ -91,6 +98,26 @@ renderExpenses = (expenses) => {
 
   newExpenses.appendChild(expensesTitleAndAmount);
   expensesList.appendChild(newExpenses);
+
+  // add edit & delete btn
+  const budgetGroupEdit = document.createElement("div");
+  budgetGroupEdit.classList.add("budget-group-edit");
+
+  const editButton = document.createElement("button");
+  const deleteButton = document.createElement("button");
+  editButton.classList.add("edit-btn");
+  deleteButton.classList.add("edit-btn");
+  editButton.innerText = "Edit";
+  deleteButton.innerText = "Delete";
+
+  newExpenses.appendChild(budgetGroupEdit);
+  budgetGroupEdit.appendChild(editButton);
+  budgetGroupEdit.appendChild(deleteButton);
+
+  //action on edit & delete
+  deleteButton.addEventListener("click", (event) =>
+    removeExpenses(event, expenses.id)
+  );
 };
 
 /////////////////////////////////////////////////////////////////////////// 4
