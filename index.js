@@ -60,8 +60,8 @@ renderIncome = (income) => {
   /////////////////////////////////////////////////////////////////////////// 5
   // 5 - Edit & Delete btns (for both income & expenses)
 
-  const budgetItemEdit = document.createElement("div");
-  budgetItemEdit.classList.add("income-edit");
+  const budgetGroupEdit = document.createElement("div");
+  budgetGroupEdit.classList.add("budget-group-edit");
 
   const editButton = document.createElement("button");
   const deleteButton = document.createElement("button");
@@ -70,9 +70,9 @@ renderIncome = (income) => {
   editButton.innerText = "Edit";
   deleteButton.innerText = "Delete";
 
-  newIncome.appendChild(budgetItemEdit);
-  budgetItemEdit.appendChild(editButton);
-  budgetItemEdit.appendChild(deleteButton);
+  newIncome.appendChild(budgetGroupEdit);
+  budgetGroupEdit.appendChild(editButton);
+  budgetGroupEdit.appendChild(deleteButton);
 
   //action on edit & delete
   deleteButton.addEventListener("click", (event) =>
@@ -94,7 +94,7 @@ renderExpenses = (expenses) => {
 };
 
 /////////////////////////////////////////////////////////////////////////// 4
-// 4 - Sum of incomes
+// 4 - SUM of incomes / expenses
 
 const calcSum = (incomes, incomeTotal) => {
   sum = incomes
@@ -103,6 +103,12 @@ const calcSum = (incomes, incomeTotal) => {
   incomeTotal.innerText = sum;
 };
 
+const calcSumExpenses = (allexpenses, expensesTotal) => {
+  sum = allexpenses
+    .map((expenses) => Number(expenses.value))
+    .reduce((a, b) => a + b, 0);
+  expensesTotal.innerText = sum;
+};
 /////////////////////////////////////////////////////////////////////////// 2
 // 2 - Create Income & Expenses object
 
@@ -140,8 +146,7 @@ const addExpenses = () => {
 
   allexpenses.push(expenses);
   renderExpenses(expenses);
-  // Calculate sum of expensess
-  calcSum(expenses, expensesTotal);
+  calcSumExpenses(allexpenses, expensesTotal);
 
   // Clear input fields
   expensesName.value = "";
