@@ -1,6 +1,6 @@
 // Arrays
-const incomes = [];
-const expenses = [];
+let incomes = [];
+let expenses = [];
 
 /*
 Income bedzie obiektem:
@@ -20,7 +20,25 @@ const incomeAmount = document.querySelector("#income-amount"); // amount input
 const incomeForm = document.querySelector("#income-form"); // form
 const incomeList = document.querySelector("#income-list-container");
 const incomeTotal = document.querySelector("#income-total"); // income sum
+
+const expensesName = document.querySelector("#expenses-name"); // expenses input
+const expensesAmount = document.querySelector("#expenses-amount"); // amount input
+const expensesForm = document.querySelector("#expenses-form"); // form
+const expensesList = document.querySelector("#expenses-list-container");
+const expensesTotal = document.querySelector("#expenses-total"); // expenses sum
+
 const totalBalance = document.querySelector("#total-balance"); // balance info
+
+// /////////////////////////////////////////////////////////////////////////// 6
+// 6 - Remove btn function
+
+const removeIncome = (event, itemId) => {
+  incomes = incomes.filter((item) => item.id !== itemId);
+
+  const element = event.currentTarget;
+  const elementParent = element.closest(".income-list");
+  elementParent.remove();
+};
 
 /////////////////////////////////////////////////////////////////////////// 3
 // 3 - renderIncome Function
@@ -59,7 +77,7 @@ renderIncome = (income) => {
 
   //action on edit & delete
   deleteButton.addEventListener("click", (event) =>
-    removeIncome(event, incomeId)
+    removeIncome(event, income.id)
   );
 };
 

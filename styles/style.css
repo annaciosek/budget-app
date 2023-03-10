@@ -21,7 +21,7 @@ body {
 }
 .container {
   margin: 0 auto;
-  width: 1140px;
+  width: 1440px;
 }
 
 h1 {
@@ -42,9 +42,10 @@ h2 {
   letter-spacing: 0.03em;
   margin-bottom: 0.5em;
 }
-
-.nav {
+.flex {
   display: flex;
+}
+.nav {
   justify-content: center;
   padding: 10px;
 }
@@ -58,7 +59,6 @@ h2 {
 }
 
 #budget-section {
-  display: flex;
   justify-content: center;
   gap: 40px;
 }
