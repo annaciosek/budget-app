@@ -92,7 +92,7 @@ const calcSum = (incomes, incomeTotal) => {
 };
 
 /////////////////////////////////////////////////////////////////////////// 2
-// 2 - Create Income object
+// 2 - Create Income & Expenses object
 
 const addIncome = () => {
   const incomeNameValue = incomeName.value;
@@ -115,10 +115,36 @@ const addIncome = () => {
   incomeAmount.value = "";
 };
 
+const addExpenses = () => {
+  const expensesNameValue = expensesName.value;
+  const expensesAmountValue = expensesAmount.value;
+  const expensesId = Date.now();
+
+  const expenses = {
+    id: expensesId,
+    title: expensesNameValue,
+    value: expensesAmountValue,
+  };
+
+  expenses.push(expenses);
+  renderExpenses(expenses);
+  // Calculate sum of expensess
+  calcSum(expenses, expensesTotal);
+
+  // Clear input fields
+  expensesName.value = "";
+  expensesAmount.value = "";
+};
+
 /////////////////////////////////////////////////////////////////////////// 1
 // 1 - Click event
 
 incomeForm.addEventListener("submit", (event) => {
   event.preventDefault();
   addIncome();
+});
+
+expensesForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  addExpenses();
 });
