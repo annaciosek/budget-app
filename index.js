@@ -43,6 +43,7 @@ const removeIncome = (event, itemId) => {
   const elementParent = element.closest(".budget-group-list");
   elementParent.remove();
   calcSum(incomes, incomeTotal);
+  balance(incomeTotal, expensesTotal);
 };
 
 const removeExpenses = (event, itemId) => {
@@ -52,6 +53,7 @@ const removeExpenses = (event, itemId) => {
   const elementParent = element.closest(".budget-group-list");
   elementParent.remove();
   calcSumExpenses(allexpenses, expensesTotal);
+  balance(incomeTotal, expensesTotal);
 };
 /////////////////////////////////////////////////////////////////////////// 3
 // 3 - render Income & render Expenses
