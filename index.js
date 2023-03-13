@@ -32,12 +32,55 @@ const totalBalance = document.querySelector("#total-balance"); // balance info
 let total = 0;
 let incomeSum = 0;
 let expensesSum = 0;
+// /////////////////////////////////////////////////////////////////////////// 7
+// 7 - Edit btn
+const editIncome = (event, income) => {
+  //// ?
+  const element = event.currentTarget;
+  const elementParent = element.closest(".budget-group-list");
+  elementParent.innerHTML = "";
+
+  const editForm = document.createElement("form");
+  editForm.classList.add("edit-form");
+  const editName = document.createElement("input");
+  const editAmount = document.createElement("input");
+  const div = document.createElement("div");
+  const editButtonSave = document.createElement("button");
+  const editButtonCancel = document.createElement("button");
+
+  div.classList.add("edit-btns");
+  editName.classList.add("form-input");
+  editName.setAttribute("name", "editName");
+  editName.setAttribute("type", "text");
+  editName.classList.add("form-input");
+  editAmount.classList.add("form-input");
+  editAmount.setAttribute("name", "editAmount");
+  editAmount.setAttribute("type", "number");
+  editAmount.setAttribute("step", "0.01");
+  editAmount.setAttribute("min", "0.01");
+  editButtonSave.type = "submit";
+  editButtonSave.classList.add("edit-btn");
+  editButtonSave.innerText = "✓";
+  editButtonCancel.type = "submit";
+  editButtonCancel.classList.add("edit-btn");
+  editButtonCancel.innerText = "×";
+
+  editName.value = `${income.title}`; //////// ?
+  editAmount.value = `${income.value}`; /////// ?
+
+  editForm.appendChild(editName);
+  editForm.appendChild(editAmount);
+  elementParent.appendChild(editForm);
+  div.appendChild(editButtonSave);
+  div.appendChild(editButtonCancel);
+  elementParent.appendChild(div);
+};
 
 // /////////////////////////////////////////////////////////////////////////// 6
-// 6 - Remove btn function
+// 6 - Remove btn
 
 const removeIncome = (event, itemId) => {
-  incomes = incomes.filter((item) => item.id !== itemId);
+  incomes = incomes.filter((item) => item.id !== itemId); // removes from array
 
   const element = event.currentTarget;
   const elementParent = element.closest(".budget-group-list");
@@ -55,6 +98,7 @@ const removeExpenses = (event, itemId) => {
   calcSumExpenses(allexpenses, expensesTotal);
   balance(incomeTotal, expensesTotal);
 };
+
 /////////////////////////////////////////////////////////////////////////// 3
 // 3 - render Income & render Expenses
 renderIncome = (income) => {
@@ -78,12 +122,12 @@ renderIncome = (income) => {
   const budgetGroupEdit = document.createElement("div");
   budgetGroupEdit.classList.add("budget-group-edit");
 
-  const editButton = document.createElement("button");
   const deleteButton = document.createElement("button");
-  editButton.classList.add("edit-btn");
+  const editButton = document.createElement("button");
   deleteButton.classList.add("edit-btn");
-  editButton.innerText = "Edit";
+  editButton.classList.add("edit-btn");
   deleteButton.innerText = "Delete";
+  editButton.innerText = "Edit";
 
   newIncome.appendChild(budgetGroupEdit);
   budgetGroupEdit.appendChild(editButton);
@@ -93,6 +137,7 @@ renderIncome = (income) => {
   deleteButton.addEventListener("click", (event) =>
     removeIncome(event, income.id)
   );
+  editButton.addEventListener("click", (event) => editIncome(event, income.id));
 };
 
 renderExpenses = (expenses) => {
@@ -107,7 +152,7 @@ renderExpenses = (expenses) => {
   newExpenses.appendChild(expensesTitleAndAmount);
   expensesList.appendChild(newExpenses);
 
-  // add edit & delete btn
+  // add delete btn
   const budgetGroupEdit = document.createElement("div");
   budgetGroupEdit.classList.add("budget-group-edit");
 
@@ -134,14 +179,14 @@ renderExpenses = (expenses) => {
 const calcSum = (incomes, incomeTotal) => {
   incomeSum = incomes
     .map((income) => Number(income.value))
-    .reduce((a, b) => a + b, 0);
+    .reduce((prevValue, currValue) => prevValue + currValue, 0);
   incomeTotal.innerText = incomeSum;
 };
 
 const calcSumExpenses = (allexpenses, expensesTotal) => {
   expensesSum = allexpenses
     .map((expenses) => Number(expenses.value))
-    .reduce((a, b) => a + b, 0);
+    .reduce((prevValue, currValue) => prevValue + currValue, 0);
   expensesTotal.innerText = expensesSum;
 };
 
