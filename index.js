@@ -76,6 +76,15 @@ const editIncome = (event, income) => {
   elementParent.appendChild(div);
 };
 
+editButtonSave.addEventListener("click", (e) => {
+  // value = updated value (Number?)
+  // usuń elementParent
+  // renderIncome();
+  // calcSum(incomes, incomeTotal);
+  // calcSumExpenses(allexpenses, expensesTotal);
+  // balance(incomeTotal, expensesTotal);
+});
+
 // /////////////////////////////////////////////////////////////////////////// 6
 // 6 - Remove btn
 
