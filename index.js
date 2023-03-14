@@ -46,7 +46,6 @@ const editIncome = (event, income) => {
   const editAmount = document.createElement("input");
   const div = document.createElement("div");
   const editButtonSave = document.createElement("button");
-  const editButtonCancel = document.createElement("button");
 
   div.classList.add("edit-btns");
   editName.classList.add("form-input");
@@ -61,9 +60,6 @@ const editIncome = (event, income) => {
   editButtonSave.type = "submit";
   editButtonSave.classList.add("edit-btn");
   editButtonSave.innerText = "✓";
-  editButtonCancel.type = "submit";
-  editButtonCancel.classList.add("edit-btn");
-  editButtonCancel.innerText = "×";
 
   editName.value = `${income.title}`; //////// ?
   editAmount.value = `${income.value}`; /////// ?
@@ -72,18 +68,17 @@ const editIncome = (event, income) => {
   editForm.appendChild(editAmount);
   elementParent.appendChild(editForm);
   div.appendChild(editButtonSave);
-  div.appendChild(editButtonCancel);
   elementParent.appendChild(div);
-};
 
-editButtonSave.addEventListener("click", (e) => {
-  // value = updated value (Number?)
-  // usuń elementParent
-  // renderIncome();
-  // calcSum(incomes, incomeTotal);
-  // calcSumExpenses(allexpenses, expensesTotal);
-  // balance(incomeTotal, expensesTotal);
-});
+  editButtonSave.addEventListener("click", () => {
+    income.title = editName.value;
+    income.value = editAmount.value;
+    elementParent.remove();
+    renderIncome(income);
+    calcSum(incomes, incomeTotal);
+    balance(incomeTotal, expensesTotal);
+  });
+};
 
 // /////////////////////////////////////////////////////////////////////////// 6
 // 6 - Remove btn
@@ -146,7 +141,7 @@ renderIncome = (income) => {
   deleteButton.addEventListener("click", (event) =>
     removeIncome(event, income.id)
   );
-  editButton.addEventListener("click", (event) => editIncome(event, income.id));
+  editButton.addEventListener("click", (event) => editIncome(event, income));
 };
 
 renderExpenses = (expenses) => {

@@ -122,6 +122,7 @@ nav {
   margin-bottom: 0.5em;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
 }
 .budget-group-list:last-child {
@@ -144,5 +145,6 @@ nav {
 .edit-btn:first-child {
   margin-right: 10px;
 }
-.edit-form {
+.edit-form input:not(:last-child) {
+  margin-right: 5px;
 }
