@@ -1,7 +1,3 @@
-// Arrays
-let incomes = [];
-let allexpenses = [];
-
 /*
 Income bedzie obiektem:
 @income: 
@@ -9,9 +5,13 @@ Income bedzie obiektem:
     id: number;
     title: string,
     value: number;
-    isCompleted: boolean,
 }
 */
+
+// Arrays
+
+let incomes = [];
+let allexpenses = [];
 
 // Variables
 
@@ -32,96 +32,77 @@ const totalBalance = document.querySelector("#total-balance"); // balance info
 let total = 0;
 let incomeSum = 0;
 let expensesSum = 0;
-// /////////////////////////////////////////////////////////////////////////// 7
-// 7 - Edit btn
-const editIncome = (event, income) => {
-  //// ?
-  const element = event.currentTarget;
-  const elementParent = element.closest(".budget-group-list");
-  elementParent.innerHTML = "";
 
-  const editForm = document.createElement("form");
-  editForm.classList.add("edit-form");
-  const editName = document.createElement("input");
-  const editAmount = document.createElement("input");
-  const div = document.createElement("div");
-  const editButtonSave = document.createElement("button");
+////////////////////////////////////////////////////////////////////////////////////// 1 - Click events
 
-  div.classList.add("edit-btns");
-  editName.classList.add("form-input");
-  editName.setAttribute("name", "editName");
-  editName.setAttribute("type", "text");
-  editName.classList.add("form-input");
-  editAmount.classList.add("form-input");
-  editAmount.setAttribute("name", "editAmount");
-  editAmount.setAttribute("type", "number");
-  editAmount.setAttribute("step", "0.01");
-  editAmount.setAttribute("min", "0.01");
-  editButtonSave.type = "submit";
-  editButtonSave.classList.add("edit-btn");
-  editButtonSave.innerText = "✓";
+incomeForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  addIncome();
+});
 
-  editName.value = `${income.title}`; //////// ?
-  editAmount.value = `${income.value}`; /////// ?
+expensesForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  addExpenses();
+});
 
-  editForm.appendChild(editName);
-  editForm.appendChild(editAmount);
-  elementParent.appendChild(editForm);
-  div.appendChild(editButtonSave);
-  elementParent.appendChild(div);
+////////////////////////////////////////////////////////////////////////////////////// 2 - Income/Expense Object
 
-  editButtonSave.addEventListener("click", () => {
-    income.title = editName.value;
-    income.value = editAmount.value;
-    elementParent.remove();
-    renderIncome(income);
-    calcSum(incomes, incomeTotal);
-    balance(incomeTotal, expensesTotal);
-  });
-};
+const addIncome = () => {
+  const incomeNameValue = incomeName.value;
+  const incomeAmountValue = incomeAmount.value;
+  const incomeId = Date.now();
 
-// /////////////////////////////////////////////////////////////////////////// 6
-// 6 - Remove btn
+  const income = {
+    id: incomeId,
+    title: incomeNameValue,
+    value: incomeAmountValue,
+  };
 
-const removeIncome = (event, itemId) => {
-  incomes = incomes.filter((item) => item.id !== itemId); // removes from array
-
-  const element = event.currentTarget;
-  const elementParent = element.closest(".budget-group-list");
-  elementParent.remove();
-  calcSum(incomes, incomeTotal);
+  incomes.push(income);
+  renderIncome(income);
+  calcSum(incomes, incomeTotal); // Calculate sum of incomes
   balance(incomeTotal, expensesTotal);
+
+  // Clear input fields
+  incomeName.value = "";
+  incomeAmount.value = "";
 };
 
-const removeExpenses = (event, itemId) => {
-  allexpenses = allexpenses.filter((item) => item.id !== itemId);
+const addExpenses = () => {
+  const expensesNameValue = expensesName.value;
+  const expensesAmountValue = expensesAmount.value;
+  const expensesId = Date.now();
 
-  const element = event.currentTarget;
-  const elementParent = element.closest(".budget-group-list");
-  elementParent.remove();
+  const expenses = {
+    id: expensesId,
+    title: expensesNameValue,
+    value: expensesAmountValue,
+  };
+
+  allexpenses.push(expenses);
+  renderExpenses(expenses);
   calcSumExpenses(allexpenses, expensesTotal);
   balance(incomeTotal, expensesTotal);
+
+  expensesName.value = "";
+  expensesAmount.value = "";
 };
 
-/////////////////////////////////////////////////////////////////////////// 3
-// 3 - render Income & render Expenses
+////////////////////////////////////////////////////////////////////////////////////// 3 - Render Income/Expense
+
 renderIncome = (income) => {
-  // div for income items
-  const newIncome = document.createElement("div");
+  const newIncome = document.createElement("div"); // div for income items
   newIncome.id = `income-${income.id}`;
   newIncome.classList.add("budget-group-list");
 
-  // p for title and amount
-  const incomeTitleAndAmount = document.createElement("p");
+  const incomeTitleAndAmount = document.createElement("p"); // p for title and amount
   incomeTitleAndAmount.classList.add("income-item");
   incomeTitleAndAmount.innerHTML = `<span>${income.title}: ${income.value} PLN</span>`;
 
-  // (a) add title and amount to div and (b) div to the list
-  newIncome.appendChild(incomeTitleAndAmount);
-  incomeList.appendChild(newIncome);
+  newIncome.appendChild(incomeTitleAndAmount); // add title and amount to div
+  incomeList.appendChild(newIncome); // add div to the list
 
-  /////////////////////////////////////////////////////////////////////////// 5
-  // 5 - Edit & Delete btns
+  // Edit & Delete btns
 
   const budgetGroupEdit = document.createElement("div");
   budgetGroupEdit.classList.add("budget-group-edit");
@@ -175,10 +156,12 @@ renderExpenses = (expenses) => {
   deleteButton.addEventListener("click", (event) =>
     removeExpenses(event, expenses.id)
   );
+  editButton.addEventListener("click", (event) =>
+    editExpenses(event, expenses)
+  );
 };
 
-/////////////////////////////////////////////////////////////////////////// 4
-// 4 - SUM of incomes / expenses
+////////////////////////////////////////////////////////////////////////////////////// 4 - Sum of Incomes/Expenses
 
 const calcSum = (incomes, incomeTotal) => {
   incomeSum = incomes
@@ -204,60 +187,117 @@ const balance = (incomeTotal, expensesTotal) => {
     totalBalance.innerText = `Your balance is 0`;
   }
 };
-/////////////////////////////////////////////////////////////////////////// 2
-// 2 - Create Income & Expenses object
 
-const addIncome = () => {
-  const incomeNameValue = incomeName.value;
-  const incomeAmountValue = incomeAmount.value;
-  const incomeId = Date.now();
+////////////////////////////////////////////////////////////////////////////////////// 5 -  Remove Btn
 
-  const income = {
-    id: incomeId,
-    title: incomeNameValue,
-    value: incomeAmountValue,
-  };
+const removeIncome = (event, itemId) => {
+  incomes = incomes.filter((item) => item.id !== itemId); // removes from array
 
-  incomes.push(income);
-  renderIncome(income);
-  // Calculate sum of incomes
+  const element = event.currentTarget;
+  const elementParent = element.closest(".budget-group-list");
+  elementParent.remove();
   calcSum(incomes, incomeTotal);
   balance(incomeTotal, expensesTotal);
-
-  // Clear input fields
-  incomeName.value = "";
-  incomeAmount.value = "";
 };
 
-const addExpenses = () => {
-  const expensesNameValue = expensesName.value;
-  const expensesAmountValue = expensesAmount.value;
-  const expensesId = Date.now();
+const removeExpenses = (event, itemId) => {
+  allexpenses = allexpenses.filter((item) => item.id !== itemId);
 
-  const expenses = {
-    id: expensesId,
-    title: expensesNameValue,
-    value: expensesAmountValue,
-  };
-
-  allexpenses.push(expenses);
-  renderExpenses(expenses);
+  const element = event.currentTarget;
+  const elementParent = element.closest(".budget-group-list");
+  elementParent.remove();
   calcSumExpenses(allexpenses, expensesTotal);
   balance(incomeTotal, expensesTotal);
-
-  expensesName.value = "";
-  expensesAmount.value = "";
 };
 
-/////////////////////////////////////////////////////////////////////////// 1
-// 1 - Click event
+////////////////////////////////////////////////////////////////////////////////////// 5 -  Edit Btn
 
-incomeForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  addIncome();
-});
+const editIncome = (event, income) => {
+  const element = event.currentTarget;
+  const elementParent = element.closest(".budget-group-list");
+  elementParent.innerHTML = "";
 
-expensesForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  addExpenses();
-});
+  const editForm = document.createElement("form");
+  editForm.classList.add("edit-form");
+  const editName = document.createElement("input");
+  const editAmount = document.createElement("input");
+  const div = document.createElement("div");
+  const editButtonSave = document.createElement("button");
+
+  div.classList.add("edit-btns");
+  editName.classList.add("form-input");
+  editName.setAttribute("name", "editName");
+  editName.setAttribute("type", "text");
+  editName.classList.add("form-input");
+  editAmount.classList.add("form-input");
+  editAmount.setAttribute("name", "editAmount");
+  editAmount.setAttribute("type", "number");
+  editAmount.setAttribute("step", "0.01");
+  editAmount.setAttribute("min", "0.01");
+  editButtonSave.type = "submit";
+  editButtonSave.classList.add("edit-btn");
+  editButtonSave.innerText = "✓";
+
+  editName.value = `${income.title}`;
+  editAmount.value = `${income.value}`;
+
+  editForm.appendChild(editName);
+  editForm.appendChild(editAmount);
+  elementParent.appendChild(editForm);
+  div.appendChild(editButtonSave);
+  elementParent.appendChild(div);
+
+  editButtonSave.addEventListener("click", () => {
+    income.title = editName.value;
+    income.value = editAmount.value;
+    elementParent.remove();
+    renderIncome(income);
+    calcSum(incomes, incomeTotal);
+    balance(incomeTotal, expensesTotal);
+  });
+};
+
+const editExpenses = (event, expenses) => {
+  const element = event.currentTarget;
+  const elementParent = element.closest(".budget-group-list");
+  elementParent.innerHTML = "";
+
+  const editForm = document.createElement("form");
+  editForm.classList.add("edit-form");
+  const editName = document.createElement("input");
+  const editAmount = document.createElement("input");
+  const div = document.createElement("div");
+  const editButtonSave = document.createElement("button");
+
+  div.classList.add("edit-btns");
+  editName.classList.add("form-input");
+  editName.setAttribute("name", "editName");
+  editName.setAttribute("type", "text");
+  editName.classList.add("form-input");
+  editAmount.classList.add("form-input");
+  editAmount.setAttribute("name", "editAmount");
+  editAmount.setAttribute("type", "number");
+  editAmount.setAttribute("step", "0.01");
+  editAmount.setAttribute("min", "0.01");
+  editButtonSave.type = "submit";
+  editButtonSave.classList.add("edit-btn");
+  editButtonSave.innerText = "✓";
+
+  editName.value = `${expenses.title}`;
+  editAmount.value = `${expenses.value}`;
+
+  editForm.appendChild(editName);
+  editForm.appendChild(editAmount);
+  elementParent.appendChild(editForm);
+  div.appendChild(editButtonSave);
+  elementParent.appendChild(div);
+
+  editButtonSave.addEventListener("click", () => {
+    expenses.title = editName.value;
+    expenses.value = editAmount.value;
+    elementParent.remove();
+    renderExpenses(expenses);
+    calcSumExpenses(allexpenses, expensesTotal);
+    balance(expensesTotal, expensesTotal);
+  });
+};
