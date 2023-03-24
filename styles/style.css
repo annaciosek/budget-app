@@ -7,11 +7,12 @@
   --transparent: rgba(255, 255, 255, 0);
   --font-s: 14px;
   --font-m: 18px;
-  --font-l: 24px;
 }
+
 * {
   box-sizing: border-box;
 }
+
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -20,6 +21,7 @@ body {
   font-weight: 400;
   line-height: 1.4;
 }
+
 .container {
   margin: 0 auto;
   width: 90%;
@@ -34,15 +36,19 @@ h2 {
   letter-spacing: 0.03em;
   margin-bottom: 0.5em;
 }
+
 .flex {
   display: flex;
 }
+
 nav {
   justify-content: center;
 }
+
 .nav-logo img {
   width: 200px;
 }
+
 .total-balance-container {
   font-weight: 400;
   margin-bottom: 2em;
@@ -52,9 +58,11 @@ nav {
   display: inline-block;
   padding: 1em;
 }
+
 #balance {
   text-align: center;
 }
+
 @media screen and (max-width: 767px) {
   #budget-section {
     flex-direction: column;
@@ -77,15 +85,18 @@ nav {
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
+
 #income-form,
 #expenses-form {
   gap: 5px;
   flex-wrap: wrap;
 }
+
 #income-form input,
 #expenses-form input {
   min-width: 40%;
 }
+
 .btn-container {
   width: 18%;
 }
@@ -96,9 +107,11 @@ nav {
   border-radius: 10px;
   font-size: var(--font-s);
 }
+
 .form-input {
   border: 1px solid var(--border);
 }
+
 .btn {
   background-color: var(--accent);
   border: 1px solid var(--accent);
@@ -106,10 +119,12 @@ nav {
   transition: 0.4s;
   width: 100%;
 }
+
 .btn:hover {
   background-color: var(--bg);
   color: var(--accent);
 }
+
 .form-input:focus {
   outline-style: none;
   border: 1px solid var(--accent);
@@ -152,13 +167,16 @@ nav {
   padding: 4px 8px;
   transition: 0.4s;
 }
+
 .edit-btn:hover {
   background-color: var(--accent);
   color: var(--white);
 }
+
 .edit-btn:first-child {
   margin-right: 10px;
 }
+
 .edit-form input:not(:last-child) {
   margin-right: 5px;
 }
