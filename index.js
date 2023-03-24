@@ -49,7 +49,15 @@ expensesForm.addEventListener("submit", (event) => {
 
 const addIncome = () => {
   const incomeNameValue = incomeName.value;
-  const incomeAmountValue = incomeAmount.value;
+  const incomeAmountValue = Number(incomeAmount.value);
+
+  if (incomeAmountValue <= 0 || isNaN(incomeAmountValue)) {
+    // validate input value
+    alert("Please enter a positive number for income amount");
+    incomeAmount.value = "";
+    return;
+  }
+
   const incomeId = Date.now();
 
   const income = {
@@ -70,7 +78,13 @@ const addIncome = () => {
 
 const addExpenses = () => {
   const expensesNameValue = expensesName.value;
-  const expensesAmountValue = expensesAmount.value;
+  const expensesAmountValue = Number(expensesAmount.value);
+  if (expensesAmountValue <= 0 || isNaN(expensesAmountValue)) {
+    // validate input value
+    alert("Please enter a positive number for expenses amount");
+    expensesAmount.value = "";
+    return;
+  }
   const expensesId = Date.now();
 
   const expenses = {
@@ -249,7 +263,13 @@ const editIncome = (event, income) => {
 
   editButtonSave.addEventListener("click", () => {
     income.title = editName.value;
-    income.value = editAmount.value;
+    income.value = Number(editAmount.value);
+    if (income.value <= 0 || isNaN(income.value)) {
+      alert("Please enter a positive number for income amount");
+      income.value = "";
+      return;
+    }
+
     elementParent.remove();
     renderIncome(income);
     calcSum(incomes, incomeTotal);
@@ -294,7 +314,13 @@ const editExpenses = (event, expenses) => {
 
   editButtonSave.addEventListener("click", () => {
     expenses.title = editName.value;
-    expenses.value = editAmount.value;
+    expenses.value = Number(editAmount.value);
+    if (expenses.value <= 0 || isNaN(expenses.value)) {
+      alert("Please enter a positive number for income amount");
+      expenses.value = "";
+      return;
+    }
+
     elementParent.remove();
     renderExpenses(expenses);
     calcSumExpenses(allexpenses, expensesTotal);
