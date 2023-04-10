@@ -59,16 +59,16 @@ nav {
   padding: 1em;
 }
 
-#balance {
+.balance {
   text-align: center;
 }
 
 @media screen and (max-width: 767px) {
-  #budget-section {
+  .budget-section {
     flex-direction: column;
   }
 }
-#budget-section {
+.budget-section {
   justify-content: center;
   gap: 40px;
 }
@@ -86,14 +86,14 @@ nav {
   margin-bottom: 2em;
 }
 
-#income-form,
-#expenses-form {
+.income-form,
+.expenses-form {
   gap: 5px;
   flex-wrap: wrap;
 }
 
-#income-form input,
-#expenses-form input {
+.income-form input,
+.expenses-form input {
   min-width: 40%;
 }
 
@@ -131,15 +131,15 @@ nav {
   background-color: var(--light);
 }
 
-#income-total-container p,
-#expenses-total-container p {
+.income-total-container p,
+.expenses-total-container p {
   font-size: var(--font-s);
   font-weight: 600;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-#income-list-container {
+.income-list-container {
   margin-bottom: 2em;
 }
 

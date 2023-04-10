@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,18 +26,20 @@
 
     <main>
       <div class="container">
-        <section id="balance">
+        <section id="balance" class="balance">
           <div class="total-balance-container">
-            <span id="total-balance">Amount will go here</span>
+            <span id="total-balance"
+              >Add your income and expense to view your balance</span
+            >
           </div>
         </section>
 
-        <section id="budget-section" class="flex">
+        <section id="budget-section" class="flex budget-section">
           <!-- START OF INCOME -->
           <div id="budget-income" class="budget-part">
             <h2>Income</h2>
             <div class="form-container">
-              <form id="income-form" class="flex">
+              <form id="income-form" class="flex income-form">
                 <input
                   id="income-name"
                   class="form-input"
@@ -46,7 +49,9 @@
                 <input
                   id="income-amount"
                   class="form-input"
-                  type="text"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
                   placeholder="Amount"
                 />
                 <div class="btn-container">
@@ -56,10 +61,10 @@
                 </div>
               </form>
             </div>
-            <div id="income-list-container">
+            <div class="income-list-container">
               <!-- Income items will go here -->
             </div>
-            <div id="income-total-container">
+            <div class="income-total-container">
               <p>Income total: <span id="income-total">0</span> PLN</p>
             </div>
           </div>
@@ -69,7 +74,7 @@
           <div id="budget-expenses" class="budget-part">
             <h2>Expenses</h2>
             <div class="form-container">
-              <form id="expenses-form" class="flex">
+              <form id="expenses-form" class="flex expenses-form">
                 <input
                   id="expenses-name"
                   class="form-input"
@@ -79,7 +84,9 @@
                 <input
                   id="expenses-amount"
                   class="form-input"
-                  type="text"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
                   placeholder="Amount"
                 />
                 <div class="btn-container">
@@ -92,7 +99,7 @@
             <div id="expenses-list-container">
               <!-- Expenses items will go here -->
             </div>
-            <div id="expenses-total-container">
+            <div class="expenses-total-container">
               <p>Expenses total: <span id="expenses-total">0</span> PLN</p>
             </div>
           </div>

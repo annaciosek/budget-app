@@ -1,15 +1,3 @@
-/*
-Income bedzie obiektem:
-@income: 
-{
-    id: number;
-    title: string,
-    value: number;
-}
-*/
-
-// Arrays
-
 let incomes = [];
 let allexpenses = [];
 
@@ -18,7 +6,7 @@ let allexpenses = [];
 const incomeName = document.querySelector("#income-name"); // income input
 const incomeAmount = document.querySelector("#income-amount"); // amount input
 const incomeForm = document.querySelector("#income-form"); // form
-const incomeList = document.querySelector("#income-list-container");
+const incomeList = document.querySelector(".income-list-container");
 const incomeTotal = document.querySelector("#income-total"); // income sum
 
 const expensesName = document.querySelector("#expenses-name"); // expenses input
@@ -33,7 +21,7 @@ let total = 0;
 let incomeSum = 0;
 let expensesSum = 0;
 
-////////////////////////////////////////////////////////////////////////////////////// 1 - Click events
+////////////////////////////////// 1 - Click events
 
 incomeForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -45,16 +33,15 @@ expensesForm.addEventListener("submit", (event) => {
   addExpenses();
 });
 
-////////////////////////////////////////////////////////////////////////////////////// 2 - Income/Expense Object
+/////////////////////////////// 2 - Income/Expense Object
 
 const addIncome = () => {
   const incomeNameValue = incomeName.value;
   const incomeAmountValue = Number(incomeAmount.value);
 
-  if (incomeAmountValue <= 0 || isNaN(incomeAmountValue)) {
-    // validate input value
-    alert("Please enter a positive number for income amount");
-    incomeAmount.value = "";
+  if (incomeNameValue.length === 0) {
+    alert("Please enter a name for your income");
+    incomeName.value = "";
     return;
   }
 
@@ -68,8 +55,8 @@ const addIncome = () => {
 
   incomes.push(income);
   renderIncome(income);
-  calcSum(incomes, incomeTotal); // Calculate sum of incomes
-  balance(incomeTotal, expensesTotal);
+  calcSum(incomes, incomeTotal);
+  balance(incomeSum, expensesSum);
 
   // Clear input fields
   incomeName.value = "";
@@ -79,12 +66,13 @@ const addIncome = () => {
 const addExpenses = () => {
   const expensesNameValue = expensesName.value;
   const expensesAmountValue = Number(expensesAmount.value);
-  if (expensesAmountValue <= 0 || isNaN(expensesAmountValue)) {
-    // validate input value
-    alert("Please enter a positive number for expenses amount");
-    expensesAmount.value = "";
+
+  if (expensesNameValue.length === 0) {
+    alert("Please enter a name for your expense");
+    expensesName.value = "";
     return;
   }
+
   const expensesId = Date.now();
 
   const expenses = {
@@ -95,14 +83,14 @@ const addExpenses = () => {
 
   allexpenses.push(expenses);
   renderExpenses(expenses);
-  calcSumExpenses(allexpenses, expensesTotal);
-  balance(incomeTotal, expensesTotal);
+  calcSum(allexpenses, expensesTotal);
+  balance(incomeSum, expensesSum);
 
   expensesName.value = "";
   expensesAmount.value = "";
 };
 
-////////////////////////////////////////////////////////////////////////////////////// 3 - Render Income/Expense
+//////////////////////////////////// 3 - Render Income/Expense
 
 renderIncome = (income) => {
   const newIncome = document.createElement("div"); // div for income items
@@ -128,15 +116,18 @@ renderIncome = (income) => {
   deleteButton.innerText = "Delete";
   editButton.innerText = "Edit";
 
-  newIncome.appendChild(budgetGroupEdit);
   budgetGroupEdit.appendChild(editButton);
   budgetGroupEdit.appendChild(deleteButton);
+  newIncome.appendChild(budgetGroupEdit);
 
   //action on edit & delete
   deleteButton.addEventListener("click", (event) =>
-    removeIncome(event, income.id)
+    removeBudgetItem(event, incomes, income.id)
   );
-  editButton.addEventListener("click", (event) => editIncome(event, income));
+
+  editButton.addEventListener("click", (event) =>
+    editItem(event, income, true)
+  );
 };
 
 renderExpenses = (expenses) => {
@@ -151,7 +142,7 @@ renderExpenses = (expenses) => {
   newExpenses.appendChild(expensesTitleAndAmount);
   expensesList.appendChild(newExpenses);
 
-  // add delete btn
+  // add edit & delete btn
   const budgetGroupEdit = document.createElement("div");
   budgetGroupEdit.classList.add("budget-group-edit");
 
@@ -162,36 +153,36 @@ renderExpenses = (expenses) => {
   editButton.innerText = "Edit";
   deleteButton.innerText = "Delete";
 
-  newExpenses.appendChild(budgetGroupEdit);
   budgetGroupEdit.appendChild(editButton);
   budgetGroupEdit.appendChild(deleteButton);
+  newExpenses.appendChild(budgetGroupEdit);
 
   //action on edit & delete
   deleteButton.addEventListener("click", (event) =>
-    removeExpenses(event, expenses.id)
+    removeBudgetItem(event, allexpenses, expenses.id)
   );
   editButton.addEventListener("click", (event) =>
-    editExpenses(event, expenses)
+    editItem(event, expenses, false)
   );
 };
 
-////////////////////////////////////////////////////////////////////////////////////// 4 - Sum of Incomes/Expenses
+///////////////////////////////////// 4 - Sum of Incomes/Expenses
 
-const calcSum = (incomes, incomeTotal) => {
-  incomeSum = incomes
-    .map((income) => Number(income.value))
-    .reduce((prevValue, currValue) => prevValue + currValue, 0);
-  incomeTotal.innerText = incomeSum;
+const calcSum = (items, type) => {
+  const sum = items.reduce(
+    (prevValue, currValue) => prevValue + currValue.value,
+    0
+  );
+  type.innerText = sum;
+
+  if (type === incomeTotal) {
+    incomeSum = sum;
+  } else if (type === expensesTotal) {
+    expensesSum = sum;
+  }
 };
 
-const calcSumExpenses = (allexpenses, expensesTotal) => {
-  expensesSum = allexpenses
-    .map((expenses) => Number(expenses.value))
-    .reduce((prevValue, currValue) => prevValue + currValue, 0);
-  expensesTotal.innerText = expensesSum;
-};
-
-const balance = (incomeTotal, expensesTotal) => {
+const balance = (incomeSum, expensesSum) => {
   total = incomeSum - expensesSum;
   if (total > 0) {
     totalBalance.innerText = `You can still spend ${total} PLN`;
@@ -202,31 +193,25 @@ const balance = (incomeTotal, expensesTotal) => {
   }
 };
 
-////////////////////////////////////////////////////////////////////////////////////// 5 -  Remove Btn
+////////////////////////////////////// 5 -  Remove Btn
 
-const removeIncome = (event, itemId) => {
-  incomes = incomes.filter((item) => item.id !== itemId); // removes from array
-
+const removeBudgetItem = (event, type, itemId) => {
+  if (type === incomes) {
+    incomes = incomes.filter((item) => item.id !== itemId);
+  } else if (type === allexpenses) {
+    allexpenses = allexpenses.filter((item) => item.id !== itemId);
+  }
   const element = event.currentTarget;
   const elementParent = element.closest(".budget-group-list");
   elementParent.remove();
   calcSum(incomes, incomeTotal);
-  balance(incomeTotal, expensesTotal);
+  calcSum(allexpenses, expensesTotal);
+  balance(incomeSum, expensesSum);
 };
 
-const removeExpenses = (event, itemId) => {
-  allexpenses = allexpenses.filter((item) => item.id !== itemId);
+////////////////////////////////////// 5 -  Edit Btn
 
-  const element = event.currentTarget;
-  const elementParent = element.closest(".budget-group-list");
-  elementParent.remove();
-  calcSumExpenses(allexpenses, expensesTotal);
-  balance(incomeTotal, expensesTotal);
-};
-
-////////////////////////////////////////////////////////////////////////////////////// 5 -  Edit Btn
-
-const editIncome = (event, income) => {
+const editItem = (event, item, isIncome = false) => {
   const element = event.currentTarget;
   const elementParent = element.closest(".budget-group-list");
   elementParent.innerHTML = "";
@@ -237,6 +222,7 @@ const editIncome = (event, income) => {
   const editAmount = document.createElement("input");
   const div = document.createElement("div");
   const editButtonSave = document.createElement("button");
+  const editButtonCancel = document.createElement("button");
 
   div.classList.add("edit-btns");
   editName.classList.add("form-input");
@@ -251,79 +237,46 @@ const editIncome = (event, income) => {
   editButtonSave.type = "submit";
   editButtonSave.classList.add("edit-btn");
   editButtonSave.innerText = "✓";
+  editButtonCancel.type = "submit";
+  editButtonCancel.classList.add("edit-btn");
+  editButtonCancel.innerText = "✗";
 
-  editName.value = `${income.title}`;
-  editAmount.value = `${income.value}`;
+  editName.value = `${item.title}`;
+  editAmount.value = `${item.value}`;
 
   editForm.appendChild(editName);
   editForm.appendChild(editAmount);
   elementParent.appendChild(editForm);
   div.appendChild(editButtonSave);
+  div.appendChild(editButtonCancel);
   elementParent.appendChild(div);
 
   editButtonSave.addEventListener("click", () => {
-    income.title = editName.value;
-    income.value = Number(editAmount.value);
-    if (income.value <= 0 || isNaN(income.value)) {
-      alert("Please enter a positive number for income amount");
-      income.value = "";
+    item.title = editName.value;
+    item.value = Number(editAmount.value);
+    if (item.value <= 0 || isNaN(item.value)) {
+      alert(
+        `Please enter a positive number for ${
+          isIncome ? "income" : "expenses"
+        } amount`
+      );
+      item.value = "";
       return;
     }
 
     elementParent.remove();
-    renderIncome(income);
-    calcSum(incomes, incomeTotal);
-    balance(incomeTotal, expensesTotal);
+    isIncome ? renderIncome(item) : renderExpenses(item);
+    calcSum(
+      isIncome ? incomes : allexpenses,
+      isIncome ? incomeTotal : expensesTotal
+    );
+    balance(incomeSum, expensesSum);
   });
-};
 
-const editExpenses = (event, expenses) => {
-  const element = event.currentTarget;
-  const elementParent = element.closest(".budget-group-list");
-  elementParent.innerHTML = "";
-
-  const editForm = document.createElement("form");
-  editForm.classList.add("edit-form");
-  const editName = document.createElement("input");
-  const editAmount = document.createElement("input");
-  const div = document.createElement("div");
-  const editButtonSave = document.createElement("button");
-
-  div.classList.add("edit-btns");
-  editName.classList.add("form-input");
-  editName.setAttribute("name", "editName");
-  editName.setAttribute("type", "text");
-  editName.classList.add("form-input");
-  editAmount.classList.add("form-input");
-  editAmount.setAttribute("name", "editAmount");
-  editAmount.setAttribute("type", "number");
-  editAmount.setAttribute("step", "0.01");
-  editAmount.setAttribute("min", "0.01");
-  editButtonSave.type = "submit";
-  editButtonSave.classList.add("edit-btn");
-  editButtonSave.innerText = "✓";
-
-  editName.value = `${expenses.title}`;
-  editAmount.value = `${expenses.value}`;
-
-  editForm.appendChild(editName);
-  editForm.appendChild(editAmount);
-  elementParent.appendChild(editForm);
-  div.appendChild(editButtonSave);
-  elementParent.appendChild(div);
-
-  editButtonSave.addEventListener("click", () => {
-    expenses.title = editName.value;
-    expenses.value = Number(editAmount.value);
-    if (expenses.value <= 0 || isNaN(expenses.value)) {
-      alert("Please enter a positive number for income amount");
-      expenses.value = "";
-      return;
-    }
-
+  editButtonCancel.addEventListener("click", () => {
+    item.title = item.title;
+    item.value = item.value;
     elementParent.remove();
-    renderExpenses(expenses);
-    calcSumExpenses(allexpenses, expensesTotal);
-    balance(expensesTotal, expensesTotal);
+    isIncome ? renderIncome(item) : renderExpenses(item);
   });
 };
