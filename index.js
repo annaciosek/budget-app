@@ -36,7 +36,7 @@ expensesForm.addEventListener("submit", (event) => {
 /////////////////////////////// 2 - Income/Expense Object
 
 const addIncome = () => {
-  const incomeNameValue = incomeName.value;
+  const incomeNameValue = incomeName.value.trim();
   const incomeAmountValue = Number(incomeAmount.value);
 
   if (incomeNameValue.length === 0) {
@@ -64,7 +64,7 @@ const addIncome = () => {
 };
 
 const addExpenses = () => {
-  const expensesNameValue = expensesName.value;
+  const expensesNameValue = expensesName.value.trim();
   const expensesAmountValue = Number(expensesAmount.value);
 
   if (expensesNameValue.length === 0) {
